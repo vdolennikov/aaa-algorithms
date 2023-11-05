@@ -2,7 +2,7 @@ def max_even_sum(numbers: list) -> int:
     odd = [i for i in numbers if i % 2 == 1]
     result = sum(numbers)
 
-    if result % 2 != 0 and min:
+    if result % 2 != 0 and odd:
         return result - min(odd)
     else:
         return result
