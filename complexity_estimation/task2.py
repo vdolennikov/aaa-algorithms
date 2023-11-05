@@ -1,41 +1,43 @@
-import heapq
+def max_div3_sum(numbers: list) -> int:
+    divmod1 = [i for i in numbers if i % 3 == 1]
+    divmod2 = [i for i in numbers if i % 3 == 2]
+    result = sum(numbers)
 
+    def min2elem(array):
+        e1 = float('+inf')
+        e2 = float('+inf')
 
-def max_even_sum(numbers: list) -> int:
-    s = sum(numbers)
-    r = s % 3
-    if r == 0:
-        return s
-    h1, h2 = [], []
-    for v in numbers:
-        if v % 3 == 1:
-            if len(h1) < 2:
-                heapq.heappush(h1, -v)
-            elif v < -h1[0]:
-                heapq.heappop(h1)
-                heapq.heappush(h1, -v)
-        elif v % 3 == 2:
-            if len(h2) < 2:
-                heapq.heappush(h2, -v)
-            elif v < -h2[0]:
-                heapq.heappop(h2)
-                heapq.heappush(h2, -v)
+        for elem in array:
+            if elem < e1:
+                e2, e1 = e1, elem
+            elif elem < e2:
+                e2 = elem
 
-    r11 = -heapq.heappop(h1) if h1 else s
-    r12 = -heapq.heappop(h1) if h1 else s
+        return e1, e2
 
-    r21 = -heapq.heappop(h2) if h2 else s
-    r22 = -heapq.heappop(h2) if h2 else s
+    if result % 3 == 0:
+        return result
 
-    if r == 1:
-        return s - min(r12, r11, r21+r22)
+    elif result % 3 == 1:
+        if divmod1 and len(divmod2) >= 2:
+            return result - min(min(divmod1), sum(min2elem(divmod2)))
+        elif divmod1:
+            return result - min(divmod1)
+        elif len(divmod2) >= 2:
+            return result - sum(min2elem(divmod2))
 
-    return s - min(r11 + r12, r22, r21)
+    elif result % 3 == 2:
+        if divmod2 and len(divmod1) >= 2:
+            return result - min(min(divmod2), sum(min2elem(divmod1)))
+        elif divmod2:
+            return result - min(divmod2)
+        elif len(divmod1) >= 2:
+            return result - sum(min2elem(divmod1))
 
 
 def solution():
     numbers = [int(x) for x in input().split()]
-    result = max_even_sum(numbers)
+    result = max_div3_sum(numbers)
     print(result)
 
 

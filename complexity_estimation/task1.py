@@ -1,19 +1,14 @@
 def max_even_sum(numbers: list) -> int:
-    result = 0
-    even_nums = []
-    for num in numbers:
-        if num % 2 == 0:
-            result += num
-        else:
-            even_nums.append(num)
+    odd = [i for i in numbers if i % 2 == 1]
+    result = sum(numbers)
 
-    result += sum(sorted(even_nums,
-                         reverse=True)[:(len(even_nums) // 2 * 2)])
-
-    return result
+    if result % 2 != 0 and min:
+        return result - min(odd)
+    else:
+        return result
 
 
-def solution():
+def solution() -> int:
     numbers = [int(x) for x in input().split()]
     result = max_even_sum(numbers)
     print(result)
